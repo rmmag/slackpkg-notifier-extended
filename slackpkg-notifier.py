@@ -134,7 +134,7 @@ class TrayIcon:
                     gobject.idle_add(printInThread, "You don't have permission to run slackpkg =(")
                 elif disconnect >= 0:
                     self.tray.no_connected()
-                    gobject.idle_add(printInThread, "Are we connected to internet?")
+                    gobject.idle_add(printInThread, "Something wrong when checking for updates. No Internet connection or slackpkg servers not response.")
                 elif check_result == locked:
                     self.tray.no_update()
                     gobject.idle_add(printInThread, "Another instance of slackpkg is running.")
@@ -268,7 +268,7 @@ class TrayIcon:
             self.current_icon_path = wpath.images
             gtk.StatusIcon.set_from_file(self, wpath.images + "disconnected.png")
             self.set_blinking(True)
-            self.set_tooltip("You are not connected to the Internet.")           
+            self.set_tooltip("Something wrong when checking for updates. No Internet connection or slackpkg servers not response.")
 
         def on_activate(self, data=None):
 	    if check_u >= 0:
