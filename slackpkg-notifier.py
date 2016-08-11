@@ -115,7 +115,8 @@ class TrayIcon:
                 #no_answer = "\n";
                 #have_updates = "\nNews on ChangeLog.txt\n\n";
 		locked = "AnotherinstanceofslackpkgisrunningIfthisisnotcorrectyoucanremovevarlockslackpkgfilesandrunslackpkgagainlh"
-                no_updates = "SearchingforupdateslNonewsisgoodnewslhlh"
+                no_updates_plus = "SearchingforupdateslNonewsisgoodnewslhlh"
+                no_updates = "Nonewsisgoodnewslh"
                 gobject.idle_add(printInThread, "Checking...")
                 # You must have slackpkg 2.71 or above
                 # Thanks PiterPunk to add the check function :*
@@ -126,7 +127,7 @@ class TrayIcon:
                 if check_u >= 0:
                     self.tray.need_update()
                     gobject.idle_add(printInThread, "Done. We got updates.")
-                elif check_result == no_updates:
+                elif check_result == no_updates or check_result == no_updates_plus:
                     self.tray.no_update()
                     gobject.idle_add(printInThread, "Done. No updates.")
                 elif check_result == no_permission:
