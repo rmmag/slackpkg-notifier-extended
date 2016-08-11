@@ -182,6 +182,8 @@ class TrayIcon:
             self.use_tray = use_tray
 
         def get_repo(self):
+
+
             if not os.path.isdir('repo/'):
                 os.makedirs('repo/')
 
