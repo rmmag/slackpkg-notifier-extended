@@ -1,3 +1,8 @@
-# Known bugs #
+This is modified and extended version of https://github.com/guax/slackpkg-notifier
 
-1.0: There's no bugs, my code is perfect =P
+Modifications:
+- Fixed to working with new slackpkg version
+- Added Hide icon option in tray
+- Notifier automaticly checking for updates available for your system
+- If you have installed packages coming from no-official repository, notifier mark them and will not be cheking enymore
+
