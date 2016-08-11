@@ -12,6 +12,12 @@ happens on slackware's mirrors he's using with slackpkg.
 #   I am not a python programmer. So don't blame me for my crap identation or
 #   code here.
 #
+#
+#
+#   Big modification and extension by:
+#   Copyright (c) - rmmag
+#
+#
 #   Huge cut in code and modifications by:
 #   Copyright (C) 2009 - Henrique Grolli Bassotto
 #
