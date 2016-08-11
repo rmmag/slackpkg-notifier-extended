@@ -302,7 +302,7 @@ class TrayIcon:
         def on_about(self, data=None):
             """ Opens the About Dialog. """
             dialog = gtk.AboutDialog()
-            dialog.set_name('Slackware Update Notifier - modified')
+            dialog.set_name('Slackware Update Notifier - extended')
             # VERSIONNUMBER
             dialog.set_version(wpath.version)
             dialog.set_comments('An icon that shows if you need to update. (slackpkg based)')
