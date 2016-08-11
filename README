@@ -5,4 +5,4 @@ Modifications:
 - Added Hide icon option in tray
 - Notifier automaticly checking for updates available for your system
 - If you have installed packages coming from no-official repository, notifier mark them and will not be cheking enymore
-- Right click on 'U' icon in tray makes run updating and upgrading system
+- Left click on 'U' icon in tray makes run updating and upgrading system
