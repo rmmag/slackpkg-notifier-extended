@@ -73,7 +73,7 @@ class PeriodicChecker(Thread):
     def run(self):
         self.tray.check()
         while 1:
-            time.sleep(3599)
+            time.sleep(wpath.checker_time * 3599)
             gobject.idle_add(printInThread, "Starting scheduled checking.")
             self.tray.check()
 
