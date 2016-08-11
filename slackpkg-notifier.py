@@ -182,6 +182,9 @@ class TrayIcon:
             self.use_tray = use_tray
 
         def get_repo(self):
+            if not os.path.isdir('repo/'):
+                os.makedirs('repo/')
+
             os.popen('wget -q ftp://ftp.slackware.pl/pub/slackware/slackware-current/PACKAGES.TXT -O repo/slackware.txt')
             os.popen('wget -q http://bear.alienbase.nl/mirrors/people/alien/sbrepos/14.2/x86/PACKAGES.TXT -O repo/alien.txt')
             #    os.popen('wget -q http://www.slackware.com/~alien/slackbuilds/PACKAGES.TXT -O repo/slackbuild_alien.txt') # non-official repo
