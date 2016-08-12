@@ -163,7 +163,7 @@ class TrayIcon:
                     ('About', gtk.STOCK_ABOUT, '_About...', None,
                      'About slackpkg-notifier', self.on_about),
 		    ('Mark', gtk.STOCK_CLEAR, '_Mark PKG\'s as Non-Repo', None, 'NonRepo',
-		     self.mark_nonrepo),
+		     self.on_mark_nonrepo),
 		    ('Update',gtk.STOCK_GO_DOWN,'_Check updates',None,'Check',
                      self.on_check),
 		    ('Hide',gtk.STOCK_CANCEL,'_Hide icon',None,'Hide slackpkg-notifier',
@@ -243,7 +243,7 @@ class TrayIcon:
                 out = list(set(out) - set(nonrepo_pkg))
             return out
 
-        def mark_nonrepo(self, data=None):
+        def mark_nonrepo(self):
             gobject.idle_add(printInThread, 'Start marking ...')
             list_pkg = self.to_update()
             if (list_pkg != []):
@@ -297,6 +297,9 @@ class TrayIcon:
             self.set_tooltip("Checking for updates.")
             checker = self.Checker(self)
             checker.start()
+
+        def on_mark_nonrepo(self, data=None):
+            self.mark_nonrepo()
 
         def on_check(self, widget=None):
 	    self.check()
