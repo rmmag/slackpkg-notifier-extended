@@ -252,9 +252,9 @@ class TrayIcon:
                 f.close()
                 gobject.idle_add(printInThread, 'Unidentified packages marked as NonRepo')
                 str = '\n'.join(list_pkg)
-                self.marked_nonrepo(str+'\n\nUpdates for this packages will not be checking anymore.')
+                self.marked_info(str+'\n\nUpdates for this packages will not be checking anymore.')
             else:
-                self.marked_nonrepo('\"Non-Repo\" packages not found in your system.')
+                self.marked_info('\"Non-Repo\" packages not found in your system.')
                 gobject.idle_add(printInThread, 'Marking packages not needed')
 
         def need_update(self):
@@ -321,9 +321,8 @@ class TrayIcon:
             dialog.run()
             dialog.destroy()
 
-        def marked_nonrepo(self, lista):
+        def marked_info(self, lista):
             dialog = gtk.MessageDialog(parent=None, flags=0, type=gtk.MESSAGE_INFO, buttons=gtk.BUTTONS_OK)
-            #dialog.set_size_request(500,500)
             dialog.set_title('Marked as NonRepo')
             dialog.set_markup('Packages marked as Non-Official Repo:')
             dialog.format_secondary_text(lista)
