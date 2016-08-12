@@ -251,7 +251,10 @@ class TrayIcon:
                 f.write("\n".join(list_pkg))
                 f.close()
                 gobject.idle_add(printInThread, 'Unidentified packages marked as NonRepo')
+                str = '\n'.join(list_pkg)
+                self.marked_nonrepo(str+'\n\nUpdates for this packages will not be checking anymore.')
             else:
+                self.marked_nonrepo('\"Non-Repo\" packages not found in your system.')
                 gobject.idle_add(printInThread, 'Marking packages not needed')
 
         def need_update(self):
@@ -277,12 +280,14 @@ class TrayIcon:
             self.set_tooltip("Something wrong when checking for updates. No Internet connection or slackpkg servers not response.")
 
         def on_activate(self, data=None):
-	    if check_u >= 0:
-	      os.popen("xterm -fa 'Monospace' -fs 10 -geometry 110x35 -e sudo /usr/sbin/slackpkg upgrade-all")
-	      os.popen("xterm -fa 'Monospace' -fs 10 -geometry 110x35 -e sudo /usr/sbin/slackpkg install-new")
-	      #self.set_visible(False)
-	      gtk.StatusIcon.set_from_file(self, wpath.images + "icon.png")
-            #self.check()
+            if check_u >= 0:
+                width = gtk.gdk.screen_width()/15
+                height = gtk.gdk.screen_height()/30
+                os.popen("xterm -fa 'Monospace' -fs 10 -geometry "+str(width)+"x"+str(height)+" -e sudo /usr/sbin/slackpkg upgrade-all")
+                os.popen("xterm -fa 'Monospace' -fs 10 -geometry "+str(width)+"x"+str(height)+" -e sudo /usr/sbin/slackpkg install-new")
+                #self.set_visible(False)
+                gtk.StatusIcon.set_from_file(self, wpath.images + "icon.png")
+                #self.check()
             
         def check(self):
             global checker
@@ -313,6 +318,15 @@ class TrayIcon:
             dialog.set_version(wpath.version)
             dialog.set_comments('An icon that shows if you need to update. (slackpkg based)')
             #dialog.set_website('http://www.guax.com.br/')
+            dialog.run()
+            dialog.destroy()
+
+        def marked_nonrepo(self, lista):
+            dialog = gtk.MessageDialog(parent=None, flags=0, type=gtk.MESSAGE_INFO, buttons=gtk.BUTTONS_OK)
+            #dialog.set_size_request(500,500)
+            dialog.set_title('Marked as NonRepo')
+            dialog.set_markup('Packages marked as Non-Official Repo:')
+            dialog.format_secondary_text(lista)
             dialog.run()
             dialog.destroy()
 
