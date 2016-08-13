@@ -218,7 +218,7 @@ class TrayIcon:
             return aln_pkg
 
         def to_update(self):
-            #self.get_repo()
+            self.get_repo()
             l1 = self.search_pkg_type('')
             l2 = self.search_pkg_type('alien')
             l3 = self.search_pkg_type('SBo')
