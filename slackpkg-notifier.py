@@ -338,8 +338,8 @@ class TrayIcon:
             dialog.set_markup('Packages marked as Non-Official Repo:')
             dialog.format_secondary_text(lista)
             dialog.add_button('CLEAR List',-8)
-            resp= dialog.run()
-            if resp == -8 and os.path.isfile('repo/non_repo_pkg.txt'):
+            response = dialog.run()
+            if response == -8 and os.path.isfile('repo/non_repo_pkg.txt'):
                 os.popen('rm -f repo/non_repo_pkg.txt')
                 gobject.idle_add(printInThread, '\"NonRepo\" list cleared.')
             dialog.destroy()
