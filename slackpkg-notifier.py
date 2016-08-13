@@ -218,7 +218,7 @@ class TrayIcon:
             return aln_pkg
 
         def to_update(self):
-            self.get_repo()
+            #self.get_repo()
             l1 = self.search_pkg_type('')
             l2 = self.search_pkg_type('alien')
             l3 = self.search_pkg_type('SBo')
@@ -244,8 +244,16 @@ class TrayIcon:
             return out
 
         def mark_nonrepo(self):
+            nonrepo_pkg = []
+            if os.path.isfile('repo/non_repo_pkg.txt') and len('repo/non_repo_pkg.txt') > 0:
+                f = open('repo/non_repo_pkg.txt', 'r')
+                nonrepo_pkg = f.read().splitlines()
+                f.close()
+
             gobject.idle_add(printInThread, 'Start marking ...')
+
             list_pkg = self.to_update()
+            list_pkg = list_pkg + nonrepo_pkg
             if (list_pkg != []):
                 f = open('repo/non_repo_pkg.txt', 'w+')
                 f.write("\n".join(list_pkg))
@@ -329,7 +337,11 @@ class TrayIcon:
             dialog.set_title('Marked as NonRepo')
             dialog.set_markup('Packages marked as Non-Official Repo:')
             dialog.format_secondary_text(lista)
-            dialog.run()
+            dialog.add_button('CLEAR List',-8)
+            resp= dialog.run()
+            if resp == -8 and os.path.isfile('repo/non_repo_pkg.txt'):
+                os.popen('rm -f repo/non_repo_pkg.txt')
+                gobject.idle_add(printInThread, '\"NonRepo\" list cleared.')
             dialog.destroy()
 
     if hasattr(gtk, "StatusIcon"):
