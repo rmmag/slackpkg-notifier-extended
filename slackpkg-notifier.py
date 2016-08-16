@@ -274,6 +274,8 @@ class TrayIcon:
             if (self.to_update() != []):
                 self.set_tooltip("Updating...")
                 gtk.StatusIcon.set_from_file(self, wpath.images + "update.png")
+            else:
+                check_u = -1
 
         def no_update(self):
             self.current_icon_path = wpath.images
