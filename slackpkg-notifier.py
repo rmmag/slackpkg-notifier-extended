@@ -269,10 +269,10 @@ class TrayIcon:
 	        #if self.set_visible(1) == False:
 	    self.set_visible(True)
             self.current_icon_path = wpath.images
+            os.popen("sudo /usr/sbin/slackpkg update")
             #self.set_blinking(True)
             if (self.to_update() != []):
                 self.set_tooltip("Updating...")
-                os.popen("sudo /usr/sbin/slackpkg update")
                 gtk.StatusIcon.set_from_file(self, wpath.images + "update.png")
 
         def no_update(self):
