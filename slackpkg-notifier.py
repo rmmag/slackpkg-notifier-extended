@@ -293,8 +293,8 @@ class TrayIcon:
             if check_u >= 0:
                 width = gtk.gdk.screen_width()/15
                 height = gtk.gdk.screen_height()/30
-                os.popen("xterm -fa 'Monospace' -fs 10 -geometry "+str(width)+"x"+str(height)+" -e sudo /usr/sbin/slackpkg upgrade-all")
-                os.popen("xterm -fa 'Monospace' -fs 10 -geometry "+str(width)+"x"+str(height)+" -e sudo /usr/sbin/slackpkg install-new")
+                os.popen("xterm -T \"UPGRADING PACKAGES ...\" -fa 'Monospace' -fs 10 -geometry "+str(width)+"x"+str(height)+" -e sudo /usr/sbin/slackpkg upgrade-all")
+                os.popen("xterm -T \"INSTALLING NEW ...\"-fa 'Monospace' -fs 10 -geometry "+str(width)+"x"+str(height)+" -e sudo /usr/sbin/slackpkg install-new")
                 #self.set_visible(False)
                 gtk.StatusIcon.set_from_file(self, wpath.images + "icon.png")
                 #self.check()
@@ -339,11 +339,11 @@ class TrayIcon:
             dialog.set_title('Marked as NonRepo')
             dialog.set_markup('Packages marked as Non-Official Repo:')
             dialog.format_secondary_text(lista)
-            dialog.add_button('CLEAR List',-8)
+            dialog.add_button('DELETE List',-8)
             response = dialog.run()
             if response == -8 and os.path.isfile('repo/non_repo_pkg.txt'):
-                os.popen('rm -f repo/non_repo_pkg.txt')
-                gobject.idle_add(printInThread, '\"NonRepo\" list cleared.')
+                os.popen('rm -rf repo/non_repo_pkg.txt')
+                gobject.idle_add(printInThread, '\"NonRepo\" list refreshed.')
             dialog.destroy()
 
     if hasattr(gtk, "StatusIcon"):
