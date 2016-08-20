@@ -199,7 +199,6 @@ class TrayIcon:
                 x = line.find('#')
                 if x != 0:
                     slackrepo = line[:-2]
-            print slackrepo
 
             os.popen('wget -q '+slackrepo+'/PACKAGES.TXT -O repo/slackware.txt')
             os.popen('wget -q http://bear.alienbase.nl/mirrors/people/alien/sbrepos/'+platform.dist()[1]+'/'+arch+'/PACKAGES.TXT -O repo/alien.txt')
