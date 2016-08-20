@@ -1,6 +1,6 @@
 {
-  "name": "Slackpkg-notifier-extended",
-  "tagline": "",
-  "body": "### Welcome to Slackware Notifier - Extended.\r\nThis is modified and extended version of https://github.com/guax/slackpkg-notifier\r\n\r\nModifications:\r\n- Fixed to working with new slackpkg version\r\n- Added Hide icon option in tray\r\n- Notifier automaticly checking for updates available for your system\r\n- If you have installed packages coming from no-official repository, notifier mark them and will not be cheking enymore\r\n- Right click on 'U' icon in tray makes run updating and upgrading system\r\n",
+  "name": "Slackpkg notifier - extended",
+  "tagline": "GUI for slackpkg utility",
+  "body": "## Welcome to Slackware (slackpkg) Notifier - Extended.\r\nThis is modified and extended version of https://github.com/guax/slackpkg-notifier\r\n\r\n### Modifications:\r\n- Added supporting slackpkg+\r\n- Added Hide icon option in tray\r\n- Notifier automatically checking for updates available for your own system.\r\n- If you have installed packages coming from no-official repository, you can mark them and will not be checking anymore. System MUST be upgraded before running thin option.\r\n- Left click on 'U' icon in tray makes run updating and upgrading system - if available\r\n\r\n### Requirements:\r\n- Installed xterm\r\n- Add this line to /etc/sudoers : 'account_name ALL=(ALL) NOPASSWD: /usr/sbin/slackpkg' where 'account_name' is your own linux account ;)\r\n",
   "note": "Don't delete this file! It's used internally to help with page regeneration."
 }
