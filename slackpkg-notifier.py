@@ -197,10 +197,15 @@ class TrayIcon:
             f = open('/etc/slackpkg/mirrors', 'r')
             for line in f:
                 x = line.find('#')
-                if x != 0:
+                if x == -1:
                     slackrepo = line[:-2]
+            f.close()
 
             os.popen('wget -q '+slackrepo+'/PACKAGES.TXT -O repo/slackware.txt')
+            os.popen('wget -q ' + slackrepo + '/extra/PACKAGES.TXT -O repo/slackware_extra.txt')
+            os.popen('wget -q ' + slackrepo + '/pasture/PACKAGES.TXT -O repo/slackware_pasture.txt')
+            os.popen('wget -q ' + slackrepo + '/patches/PACKAGES.TXT -O repo/slackware_patches.txt')
+            os.popen('wget -q ' + slackrepo + '/testing/PACKAGES.TXT -O repo/slackware_testing.txt')
             os.popen('wget -q http://bear.alienbase.nl/mirrors/people/alien/sbrepos/'+platform.dist()[1]+'/'+arch+'/PACKAGES.TXT -O repo/alien.txt')
             #    os.popen('wget -q http://www.slackware.com/~alien/slackbuilds/PACKAGES.TXT -O repo/slackbuild_alien.txt') # non-official repo
             os.popen('wget -q http://bear.alienbase.nl/mirrors/people/alien/restricted_sbrepos/'+platform.dist()[1]+'/'+arch+'/PACKAGES.TXT -O repo/alien_restricted.txt')
@@ -228,6 +233,7 @@ class TrayIcon:
                 x = line.find('PACKAGE NAME:')
                 if x >= 0:
                     aln_pkg.append(line[15:-5])
+            f.close()
             return aln_pkg
 
         def to_update(self):
@@ -240,6 +246,10 @@ class TrayIcon:
             my_slackware_list = sorted(list(set(my_slackware_list) - set(l3)))
 
             to_upgrade = list(set(my_slackware_list) - set(self.cnv_repo_to_list('slackware.txt')))
+            to_upgrade = list(set(to_upgrade) - set(self.cnv_repo_to_list('slackware_extra.txt')))
+            to_upgrade = list(set(to_upgrade) - set(self.cnv_repo_to_list('slackware_pasture.txt')))
+            to_upgrade = list(set(to_upgrade) - set(self.cnv_repo_to_list('slackware_patches.txt')))
+            to_upgrade = list(set(to_upgrade) - set(self.cnv_repo_to_list('slackware_testing.txt')))
             to_upgrade = list(set(to_upgrade) - set(self.cnv_repo_to_list('slacky.txt')))
             to_upgrade = list(set(to_upgrade) - set(self.cnv_repo_to_list('slackpkg_plus.txt')))
             # to_upgrade = list(set(to_upgrade) - set(self.cnv_repo_to_list('slackbuild_alien.txt'))) # non-official repo
@@ -356,7 +366,7 @@ class TrayIcon:
             response = dialog.run()
             if response == -8 and os.path.isfile('repo/non_repo_pkg.txt'):
                 os.popen('rm -rf repo/non_repo_pkg.txt')
-                gobject.idle_add(printInThread, '\"NonRepo\" list refreshed.')
+                gobject.idle_add(printInThread, '\"NonRepo\" list deleted.')
             dialog.destroy()
 
     if hasattr(gtk, "StatusIcon"):
