@@ -3,8 +3,8 @@ This is modified and extended version of https://github.com/guax/slackpkg-notifi
 Modifications:
 - Added supporting slackpkg+
 - Added Hide icon option in tray
-- Notifier automaticly checking for updates available for your own system
-- If you have installed packages coming from no-official repository, you can mark them and will not be cheking anymore. System MUST be upgraded before running thin option.
+- Notifier automatically checking for updates available for your own system
+- If you have installed packages coming from no-official repository, you can mark them and will not be checking anymore. System MUST be upgraded before running thin option.
 - Left click on 'U' icon in tray makes run updating and upgrading system - if available
 
 Requirements:
