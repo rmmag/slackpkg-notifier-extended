@@ -46,6 +46,7 @@ import os
 import time
 import re
 from threading import Thread
+import platform
 
 # Internal specific imports
 import wpath
@@ -187,11 +188,23 @@ class TrayIcon:
             if not os.path.isdir('repo/'):
                 os.makedirs('repo/')
 
-            os.popen('wget -q ftp://ftp.slackware.pl/pub/slackware/slackware-current/PACKAGES.TXT -O repo/slackware.txt')
-            os.popen('wget -q http://bear.alienbase.nl/mirrors/people/alien/sbrepos/14.2/x86/PACKAGES.TXT -O repo/alien.txt')
+            if platform.architecture()[0] == '32bit':
+                arch = 'x86'
+            else:
+                arch = 'x86_64'
+
+            slackrepo = []
+            f = open('/etc/slackpkg/mirrors', 'r')
+            for line in f:
+                x = line.find('#')
+                if x != 0:
+                    slackrepo.append(line[:-2])
+
+            os.popen('wget -q '+slackrepo+'/PACKAGES.TXT -O repo/slackware.txt')
+            os.popen('wget -q http://bear.alienbase.nl/mirrors/people/alien/sbrepos/'+platform.dist()[1]+'/'+arch+'/PACKAGES.TXT -O repo/alien.txt')
             #    os.popen('wget -q http://www.slackware.com/~alien/slackbuilds/PACKAGES.TXT -O repo/slackbuild_alien.txt') # non-official repo
-            os.popen('wget -q http://bear.alienbase.nl/mirrors/people/alien/restricted_sbrepos/14.2/x86/PACKAGES.TXT -O repo/alien_restricted.txt')
-            os.popen('wget -q http://repository.slacky.eu/slackware-14.2/PACKAGES.TXT -O repo/slacky.txt')
+            os.popen('wget -q http://bear.alienbase.nl/mirrors/people/alien/restricted_sbrepos/'+platform.dist()[1]+'/'+arch+'/PACKAGES.TXT -O repo/alien_restricted.txt')
+            os.popen('wget -q http://repository.slacky.eu/slackware-'+platform.dist()[1]+'/PACKAGES.TXT -O repo/slacky.txt')
             os.popen('wget -q http://slakfinder.org/slackpkg+/PACKAGES.TXT -O repo/slackpkg_plus.txt')
             gobject.idle_add(printInThread, 'Download pkg')
 
