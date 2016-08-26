@@ -201,6 +201,7 @@ class TrayIcon:
                     slackrepo = line[:-2]
             f.close()
 
+            gobject.idle_add(printInThread, 'Download pkg')
             os.popen('wget -q '+slackrepo+'/PACKAGES.TXT -O repo/slackware.txt')
             os.popen('wget -q ' + slackrepo + '/extra/PACKAGES.TXT -O repo/slackware_extra.txt')
             os.popen('wget -q ' + slackrepo + '/pasture/PACKAGES.TXT -O repo/slackware_pasture.txt')
@@ -211,7 +212,6 @@ class TrayIcon:
             os.popen('wget -q http://bear.alienbase.nl/mirrors/people/alien/restricted_sbrepos/'+platform.dist()[1]+'/'+arch+'/PACKAGES.TXT -O repo/alien_restricted.txt')
             os.popen('wget -q http://repository.slacky.eu/slackware-'+platform.dist()[1]+'/PACKAGES.TXT -O repo/slacky.txt')
             os.popen('wget -q http://slakfinder.org/slackpkg+/PACKAGES.TXT -O repo/slackpkg_plus.txt')
-            gobject.idle_add(printInThread, 'Download pkg')
 
         def search_pkg_type(self, dane):
             installed_pkg = os.popen('ls /var/log/packages').read().split()
