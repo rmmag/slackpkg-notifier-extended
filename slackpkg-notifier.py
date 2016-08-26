@@ -317,7 +317,7 @@ class TrayIcon:
                 width = gtk.gdk.screen_width()/15
                 height = gtk.gdk.screen_height()/30
                 os.popen("xterm -T \"UPGRADING PACKAGES ...\" -fa 'Monospace' -fs 10 -geometry "+str(width)+"x"+str(height)+" -e sudo /usr/sbin/slackpkg upgrade-all")
-                os.popen("xterm -T \"INSTALLING NEW ...\"-fa 'Monospace' -fs 10 -geometry "+str(width)+"x"+str(height)+" -e sudo /usr/sbin/slackpkg install-new")
+                os.popen("xterm -T \"INSTALLING NEW ...\" -fa 'Monospace' -fs 10 -geometry "+str(width)+"x"+str(height)+" -e sudo /usr/sbin/slackpkg install-new")
                 #self.set_visible(False)
                 gtk.StatusIcon.set_from_file(self, wpath.images + "icon.png")
                 #self.check()
