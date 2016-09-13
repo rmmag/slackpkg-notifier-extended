@@ -280,7 +280,7 @@ class TrayIcon:
             if (list_pkg != []):
                 f = open('repo/non_repo_pkg.txt', 'w+')
                 f.write("\n".join(list_pkg))
-                f.close()
+                f.close() 
                 gobject.idle_add(printInThread, 'Unidentified packages marked as NonRepo')
                 str = '\n'.join(list_pkg)
                 self.marked_info(str+'\n\nUpdates for this packages will not be checking anymore.')
