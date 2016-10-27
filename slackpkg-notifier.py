@@ -68,6 +68,7 @@ def printInThread (texto):
 checker = None
 check_u = -1
 disconnect = -1
+t = 3599
 
 '''
 Class that triggers the periodic check for updates.
@@ -80,7 +81,7 @@ class PeriodicChecker(Thread):
     def run(self):
         self.tray.check()
         while 1:
-            time.sleep(wpath.checker_time * 3599)
+            time.sleep(wpath.checker_time * t)
             gobject.idle_add(printInThread, "Starting scheduled checking.")
             self.tray.check()
 
@@ -126,15 +127,18 @@ class TrayIcon:
                 check_u = check_result.find('NewsonChangeLogtxt')
                 disconnect = check_result.find('WARNINGOneormoreerror')
                 if check_u >= 0:
+                    t = 3599
                     self.tray.need_update()
                     gobject.idle_add(printInThread, "Done. We got updates.")
                 elif check_result == no_updates or check_result == no_updates_plus:
+                    t = 3599
                     self.tray.no_update()
                     gobject.idle_add(printInThread, "Done. No updates.")
                 elif check_result == no_permission:
                     self.tray.no_update()
                     gobject.idle_add(printInThread, "You don't have permission to run slackpkg =(")
                 elif disconnect >= 0:
+                    t = 300
                     self.tray.no_connected()
                     gobject.idle_add(printInThread, "Something wrong when checking for updates. No Internet connection or slackpkg servers not response.")
                 elif check_result == locked:
@@ -280,7 +284,7 @@ class TrayIcon:
             if (list_pkg != []):
                 f = open('repo/non_repo_pkg.txt', 'w+')
                 f.write("\n".join(list_pkg))
-                f.close() 
+                f.close()
                 gobject.idle_add(printInThread, 'Unidentified packages marked as NonRepo')
                 str = '\n'.join(list_pkg)
                 self.marked_info(str+'\n\nUpdates for this packages will not be checking anymore.')
@@ -295,7 +299,7 @@ class TrayIcon:
             os.popen("sudo /usr/sbin/slackpkg update")
             #self.set_blinking(True)
             if (self.to_update() != []):
-                self.set_tooltip("Updating...")
+                self.set_tooltip("Updating available...")
                 gtk.StatusIcon.set_from_file(self, wpath.images + "update.png")
             else:
                 check_u = -1
@@ -313,7 +317,7 @@ class TrayIcon:
             self.set_tooltip("Something wrong when checking for updates. No Internet connection or slackpkg servers not response.")
 
         def on_activate(self, data=None):
-            if check_u >= 0:
+            if (check_u >= 0):
                 width = gtk.gdk.screen_width()/15
                 height = gtk.gdk.screen_height()/30
                 os.popen("xterm -T \"UPGRADING PACKAGES ...\" -fa 'Monospace' -fs 10 -geometry "+str(width)+"x"+str(height)+" -e sudo /usr/sbin/slackpkg upgrade-all")
