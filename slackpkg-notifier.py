@@ -127,18 +127,15 @@ class TrayIcon:
                 check_u = check_result.find('NewsonChangeLogtxt')
                 disconnect = check_result.find('WARNINGOneormoreerror')
                 if check_u >= 0:
-                    t = 3599
                     self.tray.need_update()
                     gobject.idle_add(printInThread, "Done. We got updates.")
                 elif check_result == no_updates or check_result == no_updates_plus:
-                    t = 3599
                     self.tray.no_update()
                     gobject.idle_add(printInThread, "Done. No updates.")
                 elif check_result == no_permission:
                     self.tray.no_update()
                     gobject.idle_add(printInThread, "You don't have permission to run slackpkg =(")
                 elif disconnect >= 0:
-                    t = 300
                     self.tray.no_connected()
                     gobject.idle_add(printInThread, "Something wrong when checking for updates. No Internet connection or slackpkg servers not response.")
                 elif check_result == locked:
@@ -214,7 +211,10 @@ class TrayIcon:
             os.popen('wget -q http://bear.alienbase.nl/mirrors/people/alien/sbrepos/'+platform.dist()[1]+'/'+arch+'/PACKAGES.TXT -O repo/alien.txt')
             #    os.popen('wget -q http://www.slackware.com/~alien/slackbuilds/PACKAGES.TXT -O repo/slackbuild_alien.txt') # non-official repo
             os.popen('wget -q http://bear.alienbase.nl/mirrors/people/alien/restricted_sbrepos/'+platform.dist()[1]+'/'+arch+'/PACKAGES.TXT -O repo/alien_restricted.txt')
-            os.popen('wget -q http://repository.slacky.eu/slackware-'+platform.dist()[1]+'/PACKAGES.TXT -O repo/slacky.txt')
+            if platform.architecture()[0] == '32bit':
+	      os.popen('wget -q http://repository.slacky.eu/slackware-'+platform.dist()[1]+'/PACKAGES.TXT -O repo/slacky.txt')
+	    else:
+	      os.popen('wget -q http://repository.slacky.eu/slackware64-'+platform.dist()[1]+'/PACKAGES.TXT -O repo/slacky.txt')
             os.popen('wget -q http://slakfinder.org/slackpkg+/PACKAGES.TXT -O repo/slackpkg_plus.txt')
 
         def search_pkg_type(self, dane):
