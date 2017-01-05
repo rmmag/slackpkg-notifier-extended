@@ -304,6 +304,8 @@ class TrayIcon:
             else:
                 check_u = -1
 
+                self.no_update(self)
+
         def no_update(self):
             self.current_icon_path = wpath.images
             gtk.StatusIcon.set_from_file(self, wpath.images + "icon.png")
