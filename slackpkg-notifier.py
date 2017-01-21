@@ -304,7 +304,7 @@ class TrayIcon:
             else:
                 check_u = -1
 
-                self.no_update(self)
+                self.no_update()
 
         def no_update(self):
             self.current_icon_path = wpath.images
